@@ -2,7 +2,7 @@ version: "2.0"
 
 services:
   web:
-    image: ghcr.io/toxmon/penn-conf-companion:1.0.0
+    image: ghcr.io/toxmon/penn-conf-companion:sha-477c7b2
     expose:
       - port: 80
         as: 80
