@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Tolu Shekoni | Penn Blockchain 2026</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#09090b;--surface:#18181b;--surface-hover:#27272a;--border:#27272a;
+  --text:#fafafa;--text-dim:#a1a1aa;--text-muted:#71717a;
+  --accent:#10b981;--accent-dim:#064e3b;--accent-glow:rgba(16,185,129,.15);
+  --danger:#ef4444;--warn:#f59e0b;
+}
+html{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+body{min-height:100dvh;display:flex;flex-direction:column;padding-bottom:72px}
+a{color:var(--accent);text-decoration:none}
+.header{padding:16px 20px 12px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.header h1{font-size:17px;font-weight:600;letter-spacing:-.02em}
+.header .badge{font-size:11px;padding:3px 8px;border-radius:4px;background:var(--accent-dim);color:var(--accent);font-weight:500}
+.tabs{position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--border);display:flex;z-index:100;padding-bottom:env(safe-area-inset-bottom)}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 0 8px;cursor:pointer;color:var(--text-muted);transition:color .15s;-webkit-tap-highlight-color:transparent}
+.tab.active{color:var(--accent)}
+.tab svg{width:20px;height:20px}
+.tab span{font-size:10px;font-weight:500}
+.panel{display:none;padding:20px;animation:fadeIn .15s ease}
+.panel.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:12px}
+.card-title{font-size:14px;font-weight:600;margin-bottom:8px}
+.card-sub{font-size:12px;color:var(--text-dim);margin-bottom:4px}
+.qr-hero{text-align:center;padding:24px 0 20px}
+.qr-hero .label{font-size:13px;color:var(--text-dim);margin-bottom:12px}
+.qr-hero #qr-vcard{display:inline-block;padding:12px;background:#fff;border-radius:10px}
+.qr-hero .hint{font-size:11px;color:var(--text-muted);margin-top:10px}
+.qr-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
+.qr-mini{text-align:center}
+.qr-mini .qr-box{background:#fff;border-radius:6px;padding:6px;display:inline-block}
+.qr-mini .qr-label{font-size:10px;color:var(--text-dim);margin-top:4px}
+.work-card{display:flex;gap:14px;align-items:flex-start}
+.work-icon{width:40px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.work-info{flex:1;min-width:0}
+.work-info h3{font-size:14px;font-weight:600;margin-bottom:2px}
+.work-info p{font-size:12px;color:var(--text-dim);line-height:1.5}
+.work-info .link{display:inline-block;font-size:11px;color:var(--accent);margin-top:4px}
+.tier-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin:20px 0 8px;padding-left:2px}
+.tier-label:first-child{margin-top:0}
+.target{background:var(--surface);border:1px solid var(--border);border-radius:10px;margin-bottom:8px;overflow:hidden}
+.target-head{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.target-head:active{background:var(--surface-hover)}
+.target-name{font-size:13px;font-weight:600}
+.target-role{font-size:11px;color:var(--text-dim);margin-top:1px}
+.target-chevron{color:var(--text-muted);transition:transform .2s;font-size:14px}
+.target.open .target-chevron{transform:rotate(90deg)}
+.target-body{display:none;padding:0 14px 14px;border-top:1px solid var(--border)}
+.target.open .target-body{display:block}
+.script{background:var(--bg);border-radius:6px;padding:10px 12px;margin-top:8px;font-size:12px;line-height:1.6;color:var(--text-dim);font-style:italic;border-left:2px solid var(--accent-dim)}
+.target-meta{font-size:11px;color:var(--text-muted);margin-top:8px}
+.target-meta strong{color:var(--text-dim);font-weight:500}
+.qa-box{background:var(--accent-dim);border:1px solid rgba(16,185,129,.25);border-radius:10px;padding:14px;margin-bottom:12px}
+.qa-box .qa-label{font-size:11px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
+.qa-box p{font-size:13px;line-height:1.6;color:var(--text)}
+.pivot-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:16px}
+.pivot-box .pivot-label{font-size:11px;font-weight:600;color:var(--warn);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
+.pivot-box p{font-size:12px;line-height:1.6;color:var(--text-dim)}
+.note-filters{display:flex;gap:8px;margin-bottom:12px}
+.note-filters button{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:11px;color:var(--text-dim);cursor:pointer}
+.note-filters button.active{background:var(--accent-dim);border-color:var(--accent);color:var(--accent)}
+.note-field{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-size:13px;color:var(--text);outline:none;margin-bottom:8px;font-family:inherit;resize:vertical}
+.note-field:focus{border-color:var(--accent)}
+.note-field::placeholder{color:var(--text-muted)}
+textarea.note-field{min-height:60px}
+.note-save{width:100%;background:var(--accent);color:#000;border:none;border-radius:8px;padding:12px;font-size:13px;font-weight:600;cursor:pointer;margin-bottom:16px}
+.note{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:8px}
+.note-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+.note-name{font-size:13px;font-weight:600}
+.note-company{font-size:11px;color:var(--text-dim)}
+.note-body{font-size:12px;color:var(--text-dim);line-height:1.5;margin-top:6px}
+.note-actions{display:flex;gap:8px;margin-top:8px}
+.note-actions button{background:none;border:1px solid var(--border);border-radius:6px;padding:4px 10px;font-size:11px;color:var(--text-muted);cursor:pointer}
+.note-actions button.fu{border-color:var(--accent);color:var(--accent)}
+.note-actions button.fu.active{background:var(--accent);color:#000;border-color:var(--accent)}
+.note-actions button.del{border-color:var(--danger);color:var(--danger)}
+.notes-empty{text-align:center;padding:40px 20px;color:var(--text-muted);font-size:13px}
+.day-header{font-size:15px;font-weight:700;margin:16px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+.day-header:first-child{margin-top:0}
+.slot{display:flex;gap:12px;padding:8px 0;border-bottom:1px solid var(--border)}
+.slot-time{font-size:11px;color:var(--text-muted);width:60px;flex-shrink:0;padding-top:1px;font-variant-numeric:tabular-nums}
+.slot-info h4{font-size:13px;font-weight:600}
+.slot-info p{font-size:11px;color:var(--text-dim);margin-top:2px}
+.slot.star h4::before{content:'* ';color:var(--accent);font-weight:700}
+.slot.star2 h4::before{content:'** ';color:var(--accent);font-weight:700}
+.slot.star3 h4::before{content:'*** ';color:var(--accent);font-weight:700}
+.question{padding:10px 0;border-bottom:1px solid var(--border)}
+.question:last-child{border-bottom:none}
+.question p{font-size:12px;line-height:1.6;color:var(--text-dim);font-style:italic}
+@media(min-width:600px){
+  body{max-width:480px;margin:0 auto}
+  .tabs{max-width:480px;left:50%;transform:translateX(-50%)}
+}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>Tolu Shekoni</h1>
+  <span class="badge">PBC 2026</span>
+</div>
+
+<div class="panel active" id="panel-contact">
+  <div class="qr-hero">
+    <div class="label">Scan to save my contact</div>
+    <div id="qr-vcard"></div>
+    <div class="hint">Saves name, phone, email, LinkedIn, portfolio</div>
+  </div>
+  <div class="qr-grid">
+    <div class="qr-mini"><div class="qr-box" id="qr-phone"></div><div class="qr-label">Call</div></div>
+    <div class="qr-mini"><div class="qr-box" id="qr-email"></div><div class="qr-label">Email</div></div>
+    <div class="qr-mini"><div class="qr-box" id="qr-linkedin"></div><div class="qr-label">LinkedIn</div></div>
+  </div>
+  <div class="card" style="margin-top:20px">
+    <div class="card-title">Contact</div>
+    <div class="card-sub"><a href="tel:6012137781">601-213-7781</a></div>
+    <div class="card-sub"><a href="mailto:tolu.a.shekoni@gmail.com">tolu.a.shekoni@gmail.com</a></div>
+    <div class="card-sub"><a href="https://www.linkedin.com/in/tolulope-shekoni" target="_blank">linkedin.com/in/tolulope-shekoni</a></div>
+    <div class="card-sub"><a href="https://github.com/ToXMon" target="_blank">github.com/ToXMon</a></div>
+    <div class="card-sub"><a href="https://toxmon.github.io/tolu-portfolio/" target="_blank">Portfolio Site</a></div>
+  </div>
+</div>
+
+<div class="panel" id="panel-work">
+  <div class="card work-card">
+    <div class="work-icon" style="background:var(--accent-dim)">&gt;/</div>
+    <div class="work-info">
+      <h3>ChainPilot</h3>
+      <p>Multi-chain AI agent chat interface. Natural language to on-chain execution across ETH, BSC, Polygon, Arbitrum, Base.</p>
+      <a class="link" href="https://github.com/ToXMon" target="_blank">View on GitHub &rarr;</a>
+    </div>
+  </div>
+  <div class="card work-card">
+    <div class="work-icon" style="background:#1e1b4b">AK</div>
+    <div class="work-info">
+      <h3>web3-agent-akash</h3>
+      <p>AI agent platform deployed on Akash Network. Next.js, Prisma, Venice AI, Docker. This page is also on Akash.</p>
+      <a class="link" href="https://github.com/ToXMon" target="_blank">View on GitHub &rarr;</a>
+    </div>
+  </div>
+  <div class="card work-card">
+    <div class="work-icon" style="background:#422006">J&amp;J</div>
+    <div class="work-info">
+      <h3>Background</h3>
+      <p>Staff Engineer, Johnson &amp; Johnson &mdash; CAR-T cell therapy process intelligence. BS Engineering Science, UVA.</p>
+    </div>
+  </div>
+  <div class="pivot-box">
+    <div class="pivot-label">The Pivot Frame</div>
+    <p>&ldquo;I build AI agents that talk to blockchains &mdash; but my day job is engineering at J&amp;J. I&rsquo;m transitioning into Web3 full-time.&rdquo; When they ask about J&amp;J: &ldquo;High-stakes systems where failures are expensive. The rigor is the same in crypto.&rdquo;</p>
+  </div>
+</div>
+
+<div class="panel" id="panel-guide">
+  <div class="qa-box">
+    <div class="qa-label">Day 2 Q&amp;A Question &mdash; Ask This</div>
+    <p>&ldquo;Quick question &mdash; everyone talks about AI agents needing payment rails, but the harder problem I see in my own building is trust-minimized tool execution. When an AI agent calls a smart contract, how do we handle the delegation and permissioning problem at scale? Is anyone solving for agent-level wallet abstraction, or is that still too early?&rdquo;</p>
+  </div>
+  <div class="card" style="padding:12px 14px">
+    <div style="font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">3 Questions That Work on Anyone</div>
+    <div class="question"><p>What are you most excited about at the intersection of AI and crypto right now?</p></div>
+    <div class="question"><p>Where do you see the biggest gap between what hackers are building and what the industry actually needs?</p></div>
+    <div class="question"><p>If you were in my shoes &mdash; an experienced engineer looking to go full-time Web3 &mdash; what&rsquo;s the one move you&rsquo;d make?</p></div>
+  </div>
+  <div class="tier-label">Must Speak To</div>
+  <div class="target"><div class="target-head" onclick="toggleTarget(this)"><div><div class="target-name">Akash Network Booth</div><div class="target-role">Gold Sponsor &mdash; First stop</div></div><span class="target-chevron">&rsaquo;</span></div><div class="target-body"><div class="script">Hey &mdash; I actually deployed an AI agent chat application on Akash. It&rsquo;s a Next.js app with a tool-use agent system, Prisma backend, running in Docker on your network. I&rsquo;m a staff engineer at J&amp;J looking to transition into Web3 full-time &mdash; Akash feels like the right infra home for agent workloads. What&rsquo;s the best way to get involved?</div><div class="target-meta"><strong>Ask for:</strong> Builder grants, dev rel intro, open-source contributor paths</div></div></div>
+  <div class="target"><div class="target-head" onclick="toggleTarget(this)"><div><div class="target-name">Rishin Sharma</div><div class="target-role">Head of AI Growth, Solana Foundation</div></div><span class="target-chevron">&rsaquo;</span></div><div class="target-body"><div class="script">Rishin &mdash; I build AI agents that interact with on-chain protocols. I saw your Forbes piece on the x402 payment standard. My project ChainPilot does natural language to on-chain execution, deployed on Akash. I&rsquo;m transitioning from J&amp;J to do this full-time. Does the value capture live at the payment rail layer or the orchestration layer?</div><div class="target-meta"><strong>When:</strong> Day 2, 1:40 PM panel &rarr; Office Hours after<br><strong>Background:</strong> Wharton alum, CoinFund, Forbes feature, Open Intelligence podcast<br><strong>Close with:</strong> &ldquo;Would you be open to a 15-min call next week?&rdquo;</div></div></div>
+  <div class="target"><div class="target-head" onclick="toggleTarget(this)"><div><div class="target-name">Haley Huang</div><div class="target-role">Investment Director, YZi Labs</div></div><span class="target-chevron">&rsaquo;</span></div><div class="target-body"><div class="script">Hi Haley &mdash; I&rsquo;m a builder working on AI agent infrastructure for Web3. I know YZi Labs has been active in the AI x Crypto space. I&rsquo;m exploring my next move &mdash; is there anyone in the YZi ecosystem building at the AI-agent layer I should talk to?</div><div class="target-meta"><strong>Find at:</strong> BNB Chain booth area</div></div></div>
+  <div class="tier-label">VC Connections</div>
+  <div class="target"><div class="target-head" onclick="toggleTarget(this)"><div><div class="target-name">Tom Schmidt</div><div class="target-role">Partner, Dragonfly</div></div><span class="target-chevron">&rsaquo;</span></div><div class="target-body"><div class="script">Tom &mdash; from a builder&rsquo;s perspective, the AI-agent infra wave feels like 2020 DeFi all over again &mdash; tons of hackathon projects, unclear what sticks. Where do you see the highest signal for teams that will actually ship production-grade agent infrastructure?</div><div class="target-meta"><strong>When:</strong> Day 2, 10:40 AM panel &rarr; Office Hours after</div></div></div>
+  <div class="target"><div class="target-head" onclick="toggleTarget(this)"><div><div class="target-name">Yuan Han Li</div><div class="target-role">Partner, Blockchain Capital</div></div><span class="target-chevron">&rsaquo;</span></div><div class="target-body"><div class="script">From your perspective at Blockchain Capital, what&rsquo;s the gap between what hackers are building and what startups actually need in terms of engineering talent?</div></div></div>
+  <div class="target"><div class="target-head" onclick="toggleTarget(this)"><div><div class="target-name">Evan Fisher</div><div class="target-role">Managing Partner, Portal Ventures</div></div><span class="target-chevron">&rsaquo;</span></div><div class="target-body"><div class="script">At the early stage, do you see more opportunity for builders joining existing teams, or is there still room for new entrants in the agent-infra space?</div></div></div>
+  <div class="target"><div class="target-head" onclick="toggleTarget(this)"><div><div class="target-name">Nikhil Raman</div><div class="target-role">Investor, Union Square Ventures</div></div><span class="target-chevron">&rsaquo;</span></div><div class="target-body"><div class="script">I&rsquo;m curious about USV&rsquo;s thesis on AI and crypto convergence. Do you see these as two separate bets, or is there a specific intersection the firm is actively exploring?</div></div></div>
+  <div class="target"><div class="target-head" onclick="toggleTarget(this)"><div><div class="target-name">Vikram Singh</div><div class="target-role">Ventures, Galaxy</div></div><span class="target-chevron">&rsaquo;</span></div><div class="target-body"><div class="script">Is Galaxy looking at the agent-infra layer, and are there portfolio companies in that space that are hiring engineers?</div></div></div>
+  <div class="target"><div class="target-head" onclick="toggleTarget(this)"><div><div class="target-name">Ben Forman</div><div class="target-role">Managing Partner, Parafi</div></div><span class="target-chevron">&rsaquo;</span></div><div class="target-body"><div class="script">From Parafi&rsquo;s perspective, is there a specific DeFi primitive where AI-agent interaction would unlock the most value?</div></div></div>
+  <div class="tier-label">Ecosystem &amp; Infra</div>
+  <div class="target"><div class="target-head" onclick="toggleTarget(this)"><div><div class="target-name">Nina Rong</div><div class="target-role">COO, Binance</div></div><span class="target-chevron">&rsaquo;</span></div><div class="target-body"><div class="script">Does Binance have teams working on AI-agent integration, or is that more of an ecosystem play through BNB Chain?</div></div></div>
+  <div class="target"><div class="target-head" onclick="toggleTarget(this)"><div><div class="target-name">Andre Serrano</div><div class="target-role">Head of Ecosystem, Stacks</div></div><span class="target-chevron">&rsaquo;</span></div><div class="target-body"><div class="script">What kind of developer tooling or agent infrastructure would make Stacks more accessible to AI-agent builders?</div><div class="target-meta"><strong>When:</strong> Day 1, 4:20 PM panel &rarr; Office Hours at 5:00 PM</div></div></div>
+  <div class="target"><div class="target-head" onclick="toggleTarget(this)"><div><div class="target-name">Orest Gavryliak</div><div class="target-role">1inch &mdash; &ldquo;The Next Alpha in...&rdquo;</div></div><span class="target-chevron">&rsaquo;</span></div><div class="target-body"><div class="script">1inch&rsquo;s routing API seems like a natural integration point for agent-driven swaps. Is 1inch thinking about agent-specific APIs or tool interfaces? I&rsquo;d love to build an integration.</div><div class="target-meta"><strong>Find at:</strong> 1inch booth</div></div></div>
+  <div class="target"><div class="target-head" onclick="toggleTarget(this)"><div><div class="target-name">Robert Leshner</div><div class="target-role">Founder, Superstate</div></div><span class="target-chevron">&rsaquo;</span></div><div class="target-body"><div class="script">Do you see AI agents eventually interacting with tokenized treasuries &mdash; like agents managing treasury allocation autonomously?</div></div></div>
+  <div class="target"><div class="target-head" onclick="toggleTarget(this)"><div><div class="target-name">Dr. Bernhard Kronfellner</div><div class="target-role">Partner, BCG</div></div><span class="target-chevron">&rsaquo;</span></div><div class="target-body"><div class="script">Does BCG place consultants into crypto-native roles, or is the work mostly advisory for traditional firms exploring blockchain?</div></div></div>
+  <div class="target"><div class="target-head" onclick="toggleTarget(this)"><div><div class="target-name">Jonathan Shaffer</div><div class="target-role">CEO, Fission</div></div><span class="target-chevron">&rsaquo;</span></div><div class="target-body"><div class="script">How does Fission see the relationship between decentralized compute and Web3-native hosting?</div></div></div>
+</div>
+
+<div class="panel" id="panel-notes">
+  <div class="note-filters">
+    <button class="active" onclick="filterNotes('all',this)">All</button>
+    <button onclick="filterNotes('followup',this)">Follow Up</button>
+  </div>
+  <input type="text" id="note-name" class="note-field" placeholder="Name (e.g. Tom Schmidt)">
+  <input type="text" id="note-company" class="note-field" placeholder="Company / Role">
+  <textarea id="note-body" class="note-field" placeholder="What did you discuss? Key points, follow-up actions..."></textarea>
+  <button class="note-save" onclick="addNote()">Save Note</button>
+  <div id="notes-list"></div>
+</div>
+
+<div class="panel" id="panel-schedule">
+  <div class="day-header">Friday, March 27 &mdash; Day 1</div>
+  <div class="slot"><div class="slot-time">9:30</div><div class="slot-info"><h4>Arrive &amp; Scout</h4><p>Find Akash, BNB Chain, 1inch booth locations</p></div></div>
+  <div class="slot star"><div class="slot-time">10:20</div><div class="slot-info"><h4>Akash Booth</h4><p>Show web3-agent-akash. Ask about builder grants.</p></div></div>
+  <div class="slot"><div class="slot-time">11:00</div><div class="slot-info"><h4>BNB Chain / YZi Labs Booth</h4><p>Closed-door panel = zero competition at booths</p></div></div>
+  <div class="slot"><div class="slot-time">11:40</div><div class="slot-info"><h4>Fidelity Fireside</h4><p>Note institutional messaging for later conversations</p></div></div>
+  <div class="slot star"><div class="slot-time">12:10</div><div class="slot-info"><h4>Lunch &mdash; Network</h4><p>Don&rsquo;t eat alone. Find morning speakers.</p></div></div>
+  <div class="slot"><div class="slot-time">13:10</div><div class="slot-info"><h4>Office Hours: PE Panel</h4><p>Target PE/crypto crossover people</p></div></div>
+  <div class="slot"><div class="slot-time">14:20</div><div class="slot-info"><h4>Keynote: Phong Le (Strategy)</h4><p>Big draw &mdash; competitive networking after</p></div></div>
+  <div class="slot"><div class="slot-time">15:00</div><div class="slot-info"><h4>1inch Booth</h4><p>Find Orest, pitch agent integration</p></div></div>
+  <div class="slot"><div class="slot-time">15:40</div><div class="slot-info"><h4>Researchathon Judging</h4><p>Connect with student builders</p></div></div>
+  <div class="slot star"><div class="slot-time">16:20</div><div class="slot-info"><h4>Interoperability Paradigm</h4><p>Andre Serrano (Stacks). Multi-chain relevance.</p></div></div>
+  <div class="slot star"><div class="slot-time">17:00</div><div class="slot-info"><h4>Office Hours: Interop</h4><p>Talk to Andre Serrano</p></div></div>
+  <div class="day-header">Saturday, March 28 &mdash; Day 2</div>
+  <div class="slot"><div class="slot-time">9:45</div><div class="slot-info"><h4>Arrive, Warm Up</h4><p>Revisit Akash booth if needed</p></div></div>
+  <div class="slot"><div class="slot-time">10:00</div><div class="slot-info"><h4>Where&rsquo;s Bitcoin Going</h4><p>Moderate relevance</p></div></div>
+  <div class="slot star"><div class="slot-time">10:40</div><div class="slot-info"><h4>Where Should Crypto VCs Go</h4><p>Tom Schmidt (Dragonfly). Stay for Office Hours.</p></div></div>
+  <div class="slot star2"><div class="slot-time">11:20</div><div class="slot-info"><h4>VC Office Hours + Founder Showcase</h4><p>Split: 10 min VCs, then Founder Showcase</p></div></div>
+  <div class="slot star"><div class="slot-time">12:00</div><div class="slot-info"><h4>Lunch &mdash; Strategic</h4><p>Find Rishin Sharma. Find VCs from morning.</p></div></div>
+  <div class="slot"><div class="slot-time">13:00</div><div class="slot-info"><h4>Everything is Market</h4><p>Moderate</p></div></div>
+  <div class="slot star3"><div class="slot-time">13:40</div><div class="slot-info"><h4>Crypto as AI-Native Money</h4><p>YOUR PANEL. Front-center. Ask the Q&amp;A question.</p></div></div>
+  <div class="slot star3"><div class="slot-time">14:20</div><div class="slot-info"><h4>Office Hours &mdash; AI Panel</h4><p>Golden window. Rishin Sharma first.</p></div></div>
+  <div class="slot"><div class="slot-time">15:00</div><div class="slot-info"><h4>Office Hours: Traders</h4><p>If energy remains</p></div></div>
+  <div class="slot star"><div class="slot-time">15:40</div><div class="slot-info"><h4>Hackathon Winners</h4><p>Connect with winning teams</p></div></div>
+  <div class="slot"><div class="slot-time">16:20</div><div class="slot-info"><h4>Final Booth Visits</h4><p>Thank Akash team. Get LinkedIn connections.</p></div></div>
+</div>
+
+<nav class="tabs">
+  <div class="tab active" onclick="switchTab('contact',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 8h20"/><path d="M8 4v16"/></svg>
+    <span>Contact</span>
+  </div>
+  <div class="tab" onclick="switchTab('work',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6"/><path d="M8 6l-6 6 6 6"/></svg>
+    <span>Work</span>
+  </div>
+  <div class="tab" onclick="switchTab('guide',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+    <span>Guide</span>
+  </div>
+  <div class="tab" onclick="switchTab('notes',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+    <span>Notes</span>
+  </div>
+  <div class="tab" onclick="switchTab('schedule',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    <span>Schedule</span>
+  </div>
+</nav>
+
+<script>
+function switchTab(name, el) {
+  document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('active')});
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active')});
+  document.getElementById('panel-' + name).classList.add('active');
+  el.classList.add('active');
+}
+function toggleTarget(el) { el.parentElement.classList.toggle('open'); }
+
+document.addEventListener('DOMContentLoaded', function() {
+  var vcard = 'BEGIN:VCARD\nVERSION:3.0\nN:Shekoni;Tolulope\nFN:Tolulope Shekoni\nORG:Web3 Builder\nTEL:6012137781\nEMAIL:tolu.a.shekoni@gmail.com\nURL:https://www.linkedin.com/in/tolulope-shekoni\nURL:https://github.com/ToXMon\nURL:https://toxmon.github.io/tolu-portfolio/\nNOTE:AI Agent Builder | Web3 x AI x Data Science\nEND:VCARD';
+  new QRCode(document.getElementById('qr-vcard'), {text:vcard,width:180,height:180,colorDark:'#000000',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M});
+  new QRCode(document.getElementById('qr-phone'), {text:'tel:6012137781',width:80,height:80,colorDark:'#000000',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.L});
+  new QRCode(document.getElementById('qr-email'), {text:'mailto:tolu.a.shekoni@gmail.com',width:80,height:80,colorDark:'#000000',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.L});
+  new QRCode(document.getElementById('qr-linkedin'), {text:'https://www.linkedin.com/in/tolulope-shekoni',width:80,height:80,colorDark:'#000000',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.L});
+  renderNotes();
+});
+
+var STORAGE_KEY = 'pbc2026_notes';
+function getNotes() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch(e) { return []; } }
+function saveNotes(notes) { localStorage.setItem(STORAGE_KEY, JSON.stringify(notes)); }
+function addNote() {
+  var name = document.getElementById('note-name').value.trim();
+  var company = document.getElementById('note-company').value.trim();
+  var body = document.getElementById('note-body').value.trim();
+  if (!name) return;
+  var notes = getNotes();
+  notes.unshift({id:Date.now(),name:name,company:company,body:body,followup:false,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})});
+  saveNotes(notes);
+  document.getElementById('note-name').value='';
+  document.getElementById('note-company').value='';
+  document.getElementById('note-body').value='';
+  renderNotes();
+}
+function toggleFollowup(id) { var notes=getNotes(); var n=notes.find(function(x){return x.id===id}); if(n) n.followup=!n.followup; saveNotes(notes); renderNotes(); }
+function deleteNote(id) { saveNotes(getNotes().filter(function(x){return x.id!==id})); renderNotes(); }
+var currentFilter='all';
+function filterNotes(filter, el) { currentFilter=filter; document.querySelectorAll('.note-filters button').forEach(function(b){b.classList.remove('active')}); el.classList.add('active'); renderNotes(); }
+function renderNotes() {
+  var notes=getNotes(); if(currentFilter==='followup') notes=notes.filter(function(n){return n.followup});
+  var list=document.getElementById('notes-list');
+  if(!notes.length){ list.innerHTML='<div class="notes-empty">No notes yet. Add one above after each conversation.</div>'; return; }
+  var h='';
+  notes.forEach(function(n){
+    h+='<div class="note"><div class="note-header"><div><span class="note-name">'+esc(n.name)+'</span>'+(n.company?' <span class="note-company">&middot; '+esc(n.company)+'</span>':'')+' <span class="note-company" style="margin-left:4px">'+n.time+'</span></div></div>'+(n.body?'<div class="note-body">'+esc(n.body)+'</div>':'')+'<div class="note-actions"><button class="fu'+(n.followup?' active':'')+'" onclick="toggleFollowup('+n.id+')">'+(n.followup?'Following Up':'Follow Up')+'</button><button class="del" onclick="deleteNote('+n.id+')">Delete</button></div></div>';
+  });
+  list.innerHTML=h;
+}
+function esc(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML;}
+</script>
+</body>
+</html>
